@@ -2,8 +2,8 @@ package com.example.liuhaoyangsapplication.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FlashOn
-import androidx.compose.material.icons.filled.Timer
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -38,7 +38,7 @@ fun UtilityScreen(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Text(
-            text = "Today's progress",
+            text = "Today's Progress",
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.primary
         )
@@ -50,19 +50,27 @@ fun UtilityScreen(
         )
 
         ProgressCard(
-            title = "Exercise time",
-            current = fitnessData.activeMinutes,
-            goal = 30,
-            unit = "minute",
-            icon = Icons.Default.Timer
+            title = "Steps",
+            current = fitnessData.steps,
+            goal = dailyGoals,
+            unit = "steps",
+            icon = Icons.Default.Home
         )
 
         ProgressCard(
-            title = "Calories burned",
+            title = "Active Minutes",
+            current = fitnessData.activeMinutes,
+            goal = 30,
+            unit = "min",
+            icon = Icons.Default.Settings
+        )
+
+        ProgressCard(
+            title = "Calories",
             current = fitnessData.caloriesBurned.toInt(),
             goal = 500,
             unit = "kcal",
-            icon = Icons.Default.FlashOn
+            icon = Icons.Default.Settings
         )
 
         Spacer(modifier = Modifier.weight(1f))
@@ -95,7 +103,7 @@ fun UtilityScreen(
 
         if (showSuccessMessage) {
             Text(
-                text = "Successfully recorded",
+                text = "✓ Recorded!",
                 color = MaterialTheme.colorScheme.primary,
                 style = MaterialTheme.typography.labelLarge
             )
