@@ -25,8 +25,25 @@ class FitnessViewModel(
     private val _dailyGoals = MutableStateFlow(10000)
     val dailyGoals: StateFlow<Int> = _dailyGoals.asStateFlow()
 
+    private val _activeMinutesGoal = MutableStateFlow(30)
+    val activeMinutesGoal: StateFlow<Int> = _activeMinutesGoal.asStateFlow()
+
+    private val _calorieGoal = MutableStateFlow(500)
+    val calorieGoal: StateFlow<Int> = _calorieGoal.asStateFlow()
+
     init {
         loadTodayData()
+        loadDailyGoals()
+    }
+
+    private fun loadDailyGoals() {
+        viewModelScope.launch {
+            repository.getDailyGoals().collect { goals ->
+                _dailyGoals.value = goals.stepGoal
+                _activeMinutesGoal.value = goals.activeMinutesGoal
+                _calorieGoal.value = goals.calorieGoal.toInt()
+            }
+        }
     }
 
     fun loadTodayData() {
@@ -38,7 +55,7 @@ class FitnessViewModel(
                 val data = repository.getTodayFitnessData()
                 _fitnessData.value = data
             } catch (e: Exception) {
-                _errorMessage.value = "Error: ${e.message}"
+                _errorMessage.value = "加载失败: ${e.message}"
             } finally {
                 _isLoading.value = false
             }
@@ -54,28 +71,21 @@ class FitnessViewModel(
                 _fitnessData.value = updatedData
                 _errorMessage.value = null
             } catch (e: Exception) {
-                _errorMessage.value = "Log failure: ${e.message}"
+                _errorMessage.value = "记录失败: ${e.message}"
             } finally {
                 _isLoading.value = false
             }
         }
     }
 
-
     fun getMotivationalMessage(): String {
         val steps = _fitnessData.value.steps
         val goal = _dailyGoals.value
 
         return when {
-            steps == 0 -> "Let's begin！"
-            steps < goal -> "Go GO GO！"
-            else -> "Good job！"
+            steps == 0 -> "💪 Go GO GO!"
+            steps < goal -> "💪 Go GO GO!"
+            else -> "🎉 Well done!"
         }
-    }
-
-    fun getStepProgress(): Float {
-        val steps = _fitnessData.value.steps
-        val goal = _dailyGoals.value
-        return if (goal > 0) (steps.toFloat() / goal).coerceIn(0f, 1f) else 0f
     }
 }

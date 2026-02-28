@@ -14,9 +14,9 @@ class FitnessRepositoryImpl : FitnessRepository {
     private val _userProfile = MutableStateFlow(UserProfile())
 
     private var todayFitnessData = FitnessData(
-        steps = 5432,
-        activeMinutes = 22,
-        caloriesBurned = 210.5
+        steps = 0,
+        activeMinutes = 0,
+        caloriesBurned = 0.0
     )
 
     override suspend fun getTodayFitnessData(): FitnessData {
@@ -27,9 +27,15 @@ class FitnessRepositoryImpl : FitnessRepository {
     override suspend fun logWorkout(minutes: Int): FitnessData {
         delay(800)
 
-        val additionalCalories = minutes * 5.0
+        val profile = _userProfile.value
+
+        val additionalSteps = minutes * 100
+
+        val caloriesPerMinute = profile.weightKg * 0.05
+        val additionalCalories = minutes * caloriesPerMinute
 
         todayFitnessData = todayFitnessData.copy(
+            steps = todayFitnessData.steps + additionalSteps,
             activeMinutes = todayFitnessData.activeMinutes + minutes,
             caloriesBurned = todayFitnessData.caloriesBurned + additionalCalories
         )

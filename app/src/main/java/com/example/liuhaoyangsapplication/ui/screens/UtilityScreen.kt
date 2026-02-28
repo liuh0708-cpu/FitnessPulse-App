@@ -60,7 +60,7 @@ fun UtilityScreen(
         ProgressCard(
             title = "Active Minutes",
             current = fitnessData.activeMinutes,
-            goal = 30,
+            goal = viewModel.activeMinutesGoal.collectAsState().value,
             unit = "min",
             icon = Icons.Default.Settings
         )
@@ -68,7 +68,7 @@ fun UtilityScreen(
         ProgressCard(
             title = "Calories",
             current = fitnessData.caloriesBurned.toInt(),
-            goal = 500,
+            goal = viewModel.calorieGoal.collectAsState().value,
             unit = "kcal",
             icon = Icons.Default.Settings
         )
