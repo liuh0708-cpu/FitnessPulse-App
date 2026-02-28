@@ -9,7 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import org.koin.androidx.compose.koinViewModel
 import com.example.liuhaoyangsapplication.ui.components.ProgressCard
 import com.example.liuhaoyangsapplication.ui.components.QuickLogButton
 import com.example.liuhaoyangsapplication.ui.components.StepDisplay
@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun UtilityScreen(
     modifier: Modifier = Modifier,
-    viewModel: FitnessViewModel = viewModel()
+    viewModel: FitnessViewModel = koinViewModel()
 ) {
     val fitnessData by viewModel.fitnessData.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()

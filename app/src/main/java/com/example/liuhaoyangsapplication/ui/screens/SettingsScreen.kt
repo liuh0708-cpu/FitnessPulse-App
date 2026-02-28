@@ -7,13 +7,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import org.koin.androidx.compose.koinViewModel
 import com.example.liuhaoyangsapplication.viewmodel.SettingsViewModel
 
 @Composable
 fun SettingsScreen(
     modifier: Modifier = Modifier,
-    viewModel: SettingsViewModel = viewModel()
+    viewModel: SettingsViewModel = koinViewModel()
 ) {
     val dailyGoals by viewModel.dailyGoals.collectAsState()
     val userProfile by viewModel.userProfile.collectAsState()
@@ -101,7 +101,7 @@ fun SettingsScreen(
                         .padding(16.dp)
                 ) {
                     Text(
-                        text = "体重: ${userProfile.weightKg} kg",
+                        text = "Weight: ${userProfile.weightKg} kg",
                         style = MaterialTheme.typography.bodyLarge
                     )
 
