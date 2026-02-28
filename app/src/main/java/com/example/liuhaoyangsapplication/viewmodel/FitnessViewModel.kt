@@ -55,7 +55,7 @@ class FitnessViewModel(
                 val data = repository.getTodayFitnessData()
                 _fitnessData.value = data
             } catch (e: Exception) {
-                _errorMessage.value = "加载失败: ${e.message}"
+                _errorMessage.value = "Loading failed: ${e.message}"
             } finally {
                 _isLoading.value = false
             }
@@ -71,7 +71,7 @@ class FitnessViewModel(
                 _fitnessData.value = updatedData
                 _errorMessage.value = null
             } catch (e: Exception) {
-                _errorMessage.value = "记录失败: ${e.message}"
+                _errorMessage.value = "Log failure: ${e.message}"
             } finally {
                 _isLoading.value = false
             }
@@ -83,9 +83,9 @@ class FitnessViewModel(
         val goal = _dailyGoals.value
 
         return when {
-            steps == 0 -> "💪 Go GO GO!"
-            steps < goal -> "💪 Go GO GO!"
-            else -> "🎉 Well done!"
+            steps == 0 -> "Go GO GO!"
+            steps < goal -> "Go GO GO!"
+            else -> "Well done!"
         }
     }
 }
